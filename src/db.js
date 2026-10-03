@@ -9,11 +9,9 @@ const {
 const DATABASE_URL = process.env.DATABASE_URL || `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}` 
 
 const sequelize = new Sequelize(DATABASE_URL, {
-  dialectOptions:{
-    ssl:{
-      rejectUnauthorized:false
-    }
-  }
+  dialectOptions: process.env.DB_SSL === 'false'
+    ? {}
+    : { ssl: { rejectUnauthorized: false } },
 });
 const basename = path.basename(__filename);
 
